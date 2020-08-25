@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" /> 
+<title>Números de ponto flutuante</title>
+<style>
+table.border1, table.border1 th, table.border1 td { border: 1px solid black }
+</style>
+</head>
+<body>
+<h1>Números de ponto flutuante</h1>
+<p><a href="http://pt.wikipedia.org/wiki/V%C3%ADrgula_flutuante" target="_blank" rel="nofollow">Números de ponto flutuante</a> são uma forma de armazenar números reais em uma quantidade fixa de bits. Esses bits se dividem em:</p>
+<ul>
+<li>bit de sinal</li>
+<li>valor do expoente</li>
+<li>valor da mantissa</li>
+</ul>
+<p>O número resultante é calculado pela fórmula <i>sinal</i> × 1,<i>mantissa</i> × 2 <sup><i>expoente</i></sup>.</p>
+<p><a href="https://en.m.wikipedia.org/wiki/Microsoft_Binary_Format" rel="nofollow">https://en.m.wikipedia.org/wiki/Microsoft_Binary_Format</a></p><p>No MC1000 usam-se quatro bytes para os números, sendo que:</p>
+<ul>
+<li>Os dois primeiros bytes e os 7 bits menos significativos do terceiro compõem a parte decimal da mantissa. (O primeiro byte é o menos significativo, o terceiro o mais.)</li>
+<li>O bit mais significativo do terceiro byte indica o sinal (0 = positivo, 1 = negativo).</li>
+<li>Se o quarto byte for zero, o número é zero. Senão, subtrai-se 129 para obter o expoente.</li>
+</ul>
+<table class="border1">
+<thead>
+<tr>
+<td rowspan="2"> </td>
+<th colspan="8">bits</th>
+</tr>
+<tr>
+<th>7</th>
+<th>6</th>
+<th>5</th>
+<th>4</th>
+<th>3</th>
+<th>2</th>
+<th>1</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>byte 1</th>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<th>byte 2</th>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<th>byte 3</th>
+<td>s</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+<td>m</td>
+</tr>
+<tr>
+<th>byte 4</th>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+</tr>
+</tbody>
+</table>
+<p>Por conta disso, o maior número inteiro que pode ser atingido a partir de zero somando-se 1 sucessivas vezes é 16.777.216. A partir daí a unidade fica fora da "janela" da mantissa do número e não consegue ser somada.</p>
+<table style="border: none">
+<colgroup>
+<col style="text-align: right">
+<col span="2" style="">
+</colgroup>
+<tbody>
+<tr>
+<td>%1111.1111.1111.1111.1111.1110</td>
+<td> </td>
+<td>=16.777.214</td>
+</tr>
+<tr>
+<td>%1</td>
+<td>+</td>
+<td> </td>
+</tr>
+<tr>
+<td>%1111.1111.1111.1111.1111.1111</td>
+<td> </td>
+<td>=16.777.215</td>
+</tr>
+<tr>
+<td>%1</td>
+<td>+</td>
+<td> </td>
+</tr>
+<tr>
+<td>%1.0000.0000.0000.0000.0000.000?</td>
+<td> </td>
+<td>=16.777.216. O último bit não cabe na mantissa, assume-se 0.</td>
+</tr>
+<tr>
+<td>%1</td>
+<td>+</td>
+<td> </td>
+</tr>
+<tr>
+<td>%1.0000.0000.0000.0000.0000.000?</td>
+<td> </td>
+<td>=16.777.216. O último bit não cabe na mantissa, assume-se 0.</td>
+</tr>
+</tbody>
+</table>
+<p>Outros computadores que usam quatro bytes para a mantissa, como o TRS-80 Color Computer e o ZX Spectrum, chegam a 256 vezes esse valor: 4.294.967.296.</p>
+<h2>Rotinas da ROM para tratar números de ponto flutuante</h2>
+<p>Nas descrições abaixo,</p>
+<ul>
+<li>FLOAT: É o "acumulador de ponto flutuante", uma <a href="https://sites.google.com/site/ccemc1000/sistema/variaveis-do-sistema">variável do sistema</a> de 4 bytes localizada em $03BF–$03C2 / 959–962 onde se armazena o número de ponto flutuante sendo interpretado/calculado/etc. Aqui também se armazenam ponteiros para strings. O endereço $0390 / 912: Indica se o valor armazenado em FLOAT é numérico (0) ou string (≠0).</li>
+<li>BCDE: Designamos assim o armazenamento de um número de ponto flutuante nos registradores. B = byte 4, C = byte 3, D = byte 2, E = byte 1.</li>
+<li>@HL, @DE: Um número de ponto flutuante (4 bytes) na memória, apontado pelo par de registradores HL ou DE.</li>
+</ul>
+<table class="border1">
+<thead>
+<tr>
+<th>Endereço</th>
+<th>Operação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$DEF0</td>
+<td>DE ← FLOAT. (Converte FLOAT a um inteiro de 16 bits.)</td>
+</tr>
+<tr>
+<td>$E51D</td>
+<td>FLOAT ← 0.</td>
+</tr>
+<tr>
+<td>$E620</td>
+<td>FLOAT ← HL − DE.</td>
+</tr>
+<tr>
+<td>$E62F</td>
+<td>FLOAT ← AC (um número inteiro de 16 bits formado pelos registradores A e C).</td>
+</tr>
+<tr>
+<td>$E630</td>
+<td>FLOAT ← AB (um número inteiro de 16 bits formado pelos registradores A e B).</td>
+</tr>
+<tr>
+<td>$E63F</td>
+<td>FLOAT ← A (um número inteiro de 8 bits contido no registrador A).</td>
+</tr>
+<tr>
+<td>$EA89</td>
+<td>FLOAT ← FLOAT + 1/2.</td>
+</tr>
+<tr>
+<td>$EA8C</td>
+<td>FLOAT ← @HL + FLOAT. (Soma a FLOAT o valor de ponto flutuante apontado por HL.)</td>
+</tr>
+<tr>
+<td>$EA91</td>
+<td>FLOAT ← @HL − FLOAT. (Subtrai FLOAT do valor de ponto flutuante apontado por HL.)</td>
+</tr>
+<tr>
+<td>$EA97</td>
+<td>FLOAT ← BCDE − FLOAT.</td>
+</tr>
+<tr>
+<td>$EA9A</td>
+<td>FLOAT ← BCDE + FLOAT.</td>
+</tr>
+<tr>
+<td>$EAFD</td>
+<td>FLOAT ← 0.</td>
+</tr>
+<tr>
+<td>$EB8E</td>
+<td>FLOAT ← LOG(FLOAT).</td>
+</tr>
+<tr>
+<td>$EBD3</td>
+<td>FLOAT ← BCDE * FLOAT.</td>
+</tr>
+<tr>
+<td>$EC1F</td>
+<td>FLOAT ← FLOAT / 10.</td>
+</tr>
+<tr>
+<td>$EC2D</td>
+<td>FLOAT ← BCDE / FLOAT.</td>
+</tr>
+<tr>
+<td>$ECD3</td>
+<td>A ← SGN(FLOAT). ($01, $00 ou $FF / −1.)</td>
+</tr>
+<tr>
+<td>$ECE2</td>
+<td>FLOAT ← SGN(FLOAT).</td>
+</tr>
+<tr>
+<td>$ECF8</td>
+<td>FLOAT ← ABS(FLOAT).</td>
+</tr>
+<tr>
+<td>$ECFC</td>
+<td>FLOAT ← −FLOAT.</td>
+</tr>
+<tr>
+<td>$ED04</td>
+<td>PUSH FLOAT. (Carrega os 4 bytes de FLOAT na pilha do Z80.)</td>
+</tr>
+<tr>
+<td>$ED11</td>
+<td>FLOAT ← @HL.
+<p>Algumas constantes numéricas disponíveis na ROM de potencial interesse:</p>
+<ul>
+<li>$EF66: 1/2 (0,5)</li>
+<li>$F027: −1</li>
+<li>$F02B: 1</li>
+<li>$F11C: π/2 (1,5708)</li>
+<li>$F120: 1/4 (0,25)</li>
+<li>$F135: 2π (6,28319)</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>$ED14</td>
+<td>FLOAT ← BCDE.</td>
+</tr>
+<tr>
+<td>$ED1F</td>
+<td>BCDE ← FLOAT.</td>
+</tr>
+<tr>
+<td>$ED22</td>
+<td>BCDE ← @HL.</td>
+</tr>
+<tr>
+<td>$ED2B</td>
+<td>@HL ← FLOAT.</td>
+</tr>
+<tr>
+<td>$ED2E</td>
+<td>@HL ← @DE.</td>
+</tr>
+<tr>
+<td>$ED4D</td>
+<td>A ← SGN(FLOAT − BCDE) ($01 se FLOAT &gt; BCDE; $00 se FLOAT = BCDE; ou $FF / −1 se FLOAT &lt; BCDE.)</td>
+</tr>
+<tr>
+<td>$EDA5</td>
+<td>FLOAT ← INT(FLOAT).</td>
+</tr>
+<tr>
+<td>$EF81</td>
+<td>FLOAT ← SQR(FLOAT).</td>
+</tr>
+<tr>
+<td>$EFCE</td>
+<td>FLOAT ← EXP(FLOAT).</td>
+</tr>
+<tr>
+<td>$F05E</td>
+<td>FLOAT ← RND(FLOAT).</td>
+</tr>
+<tr>
+<td>$F0D2</td>
+<td>FLOAT ← COS(FLOAT).</td>
+</tr>
+<tr>
+<td>$F0D8</td>
+<td>FLOAT ← SIN(FLOAT).</td>
+</tr>
+<tr>
+<td>$F139</td>
+<td>FLOAT ← TAN(FLOAT).</td>
+</tr>
+<tr>
+<td>$F14E</td>
+<td>FLOAT ← ATN(FLOAT).</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

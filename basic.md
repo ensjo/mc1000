@@ -106,8 +106,8 @@ Atuam a nível de bit em operandos numéricos, convertidos a inteiros de 16 bits
     * Se *exprN* > 0, um número pseudoaleatório entre 0 (inclusive) e 1 (exclusive).
     * Se *exprN* = 0, repete o último número gerado.
     * Se *exprN* < 0, usa o parâmetro para inicializar a semente do gerador de números pseudoaleatórios.
-* ``DEF FN`` *func* ``(`` *varN* ``)`` = *exprN* — Define uma função. O nome da função segue as mesmas regras que o nome de uma variável numérica.
-* ``FN`` *func* ``(`` *exprN* ) — Calcula o valor da função *func* para o valor *exprN*.
+* ``DEF FN`` *func* ``(`` *varN* ``) =`` *exprN* — Define uma função. O nome da função segue as mesmas regras que o nome de uma variável numérica.
+* ``FN`` *func* ``(`` *exprN* ``)`` — Calcula o valor da função *func* para o valor *exprN*.
 
 Algumas funções matemáticas ausentes no BASIC do MC1000 podem ser definidas assim:
 
@@ -118,9 +118,9 @@ Algumas funções matemáticas ausentes no BASIC do MC1000 podem ser definidas a
 ## Funções referentes a cadeias de caracteres
 
 * ``LEN(`` *exprC* ``)`` — Comprimento da cadeia *exprC*.
-* ``LEFT$(`` *exprC* , *exprN* ``)`` — Os *exprN* caracteres mais à esquerda da cadeia *exprC*.
+* ``LEFT$(`` *exprC* ``,`` *exprN* ``)`` — Os *exprN* caracteres mais à esquerda da cadeia *exprC*.
 * ``MID$(`` *exprC* ``,`` *exprN1* [ ``,`` *exprN2* ] ``)`` — *exprN2* caracteres de *exprC*, começando da posição *exprN1*. Na ausência de *exprN2*, considera-se até o final da cadeia.
-* ``RIGHT$(`` *exprC* , *exprN* ``)`` — Os *exprN* caracteres mais à esquerda da cadeia *exprC*.
+* ``RIGHT$(`` *exprC* ``,`` *exprN* ``)`` — Os *exprN* caracteres mais à esquerda da cadeia *exprC*.
 * ``STR$(`` *exprN* ``)`` — A cadeia representando o valor numérico *exprN*.
 * ``VAL(`` *exprC* ``)`` — O valor numérico da cadeia *exprC*.
 * ``CHR$(`` *exprN* ``)`` — O caracter de código ASCII *exprN*.
