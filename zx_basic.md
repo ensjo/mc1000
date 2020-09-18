@@ -45,8 +45,7 @@ Em [http://www.boriel.com/wiki/en/index.php/ZX_BASIC:Released_Programs_-_MC1000]
 
 ## Informações adicionais
 
-* Tutorial de Boriel’s ZX Basic Compiler (para ZX Spectrum em castelhano): <https://tcyr.wordpress.com/2012/02/20/tutorial-de-iniciacion-a-zx-basic-fourspriter-1-instalar-el-compilador>
-* Materiais feitos com Boriel’s ZX Basic Compiler (começando pelo ZX Spectrum, terminando pelos mais variados hardwares): <https://zxbasic.readthedocs.io/en/docs/released_programs>
-
+* Tutorial do ZX Basic Compiler (para ZX Spectrum em castelhano): <https://tcyr.wordpress.com/2012/02/20/tutorial-de-iniciacion-a-zx-basic-fourspriter-1-instalar-el-compilador>
+* Materiais feitos com o ZX Basic Compiler (começando pelo ZX Spectrum, terminando pelos mais variados hardwares): <https://zxbasic.readthedocs.io/en/docs/released_programs>
 
 
