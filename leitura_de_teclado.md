@@ -25,7 +25,7 @@ Programinha-brinde: Move um caracter “#” pela tela usando as teclas \<W> (ci
 
 ## Solução para permitir que a execução do BASIC continue mesmo com uma tecla pressionada
 
-_(Desenvolvida por Ensjo em 19 de outubro de 2011.)_
+*(Desenvolvida por Ensjo em 19 de outubro de 2011.)*
 
 O MC1000 tem três rotinas na ROM relacionadas com a leitura do teclado: SKEY?, KEY? e KEY.
 
@@ -190,7 +190,7 @@ Executa ambos os programas e sente a diferença.
 
 * * *
 
-_(Nova versão desenvolvida em 2 de julho de 2015.)_
+*(Nova versão desenvolvida em 2 de julho de 2015.)*
 
 Esta é uma versão da rotina para se localizar na parte alta da VRAM, na área de 256 bytes que o MC1000 reserva para o usuário no final da RAM.
 
