@@ -12,3 +12,4 @@ Programas de outras origens:
 *   <https://github.com/ensjo/mc1000-software/tree/master/emerson>  — Programas criados/adaptados/disponibilizados por Emerson Costa (Ensjo).
 *   <https://github.com/plainspooky/mc-1000>  — Programas criados/adaptados/disponibilizados por Giovanni Nunes.
 *   <https://bitbucket.org/account/user/lst_retro/projects/MC1000>  — Programas criados/adaptados/disponibilizados por Lisias Toledo.
+*   <https://datassette.org/softwares/cce-mc1000-1> — Programas criados/adaptados/disponibilizados por Cláudio Henrique Picolo ou outros membros do sítio Datassette.
